@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./
+      dockerfile: ./docker/frontend/dev/Dockerfile
+    volumes:
+      - ./frontend:/usr/src/app
+    ports:
+      - 3000:3000
+    links:
+      - wordpress:wordpress
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'wp_headless'
+      MYSQL_USER: 'wp_headless'
+      MYSQL_PASSWORD: 'wp_headless'
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: ./
+      dockerfile: ./docker/wordpress/Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/var/www/html
+    links:
+      - mysql:mysql
+

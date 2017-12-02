@@ -1,1 +1,1 @@
-export const Config = {apiUrl: 'http://localhost:8080'}
+export const Config = {apiUrl: 'http://wordpress:8080'}
